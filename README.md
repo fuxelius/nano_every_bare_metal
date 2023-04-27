@@ -35,13 +35,42 @@ Compiling and uploading the c-code to the board takes place in **Bash** by calli
 To connect to the board a serial interface is needed. We are going to use [tio](https://github.com/tio/tio) for this which is a simple serial device tool which features a straightforward command-line and configuration file interface to easily connect to serial TTY devices for basic I/O operations. To make a simpler serial device tool for talking with serial TTY devices with less focus on classic terminal/modem features and more focus on the needs of embedded developers and hackers.
 
 ## Installation and Configuration
-Do the following steps to install a system as above.
+### Follow these steps to install a complete system:
 
 ### 1) Arduino IDE
-Download the latest [Arduino IDE](https://docs.arduino.cc/software/ide-v2) and install it if you have not already done that. We are going to use its avr-gcc compiler and tools for compiling. 
 
+<img src="doc/pic/install_ide.png"  width="600">
 
-Homebrew
+Download the latest [Arduino IDE](https://docs.arduino.cc/software/ide-v2) and install it if you have not already done that. We are going to use its **avr-gcc** compiler and tools. 
+
+### 2) Homebrew
+You need to install [Homebrew](https://mac.install.guide/homebrew/index.html) in order to install a number of crusial components to get the system running.
+
+Once Homebrew is installed, install the following programs.
+
+	brew install make
+	brew install tio
+	brew install avrdude
+	
+### 3) Install source
+Installing the source code from this GitHub page
+
+	git clone git@github.com:fuxelius/nano_every_bare_metal.git
+	cd nano_every_bare_metal
+	
+### 4) Set path to avr-gcc in Arduino Library
+Find out the right path to your avr-gcc binaries, and edit this path in *Makefile*
+
+	ARDUINO_BIN = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
+	
+### 5) Test if it works
+
+	make
+	make flash
+	
+## Systems internals
+
+descibe file structure and separate compilation, the .deploy and .object directory
 
 ## References and Further Resources
 
