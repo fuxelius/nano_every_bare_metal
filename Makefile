@@ -18,13 +18,14 @@ DEVICE      = atmega4809
 CLOCK       = 2666666
 
 ARDUINO_BIN = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
+
 AVR_GCC     = $(ARDUINO_BIN)/avr-gcc
 AVR_OBJCOPY = $(ARDUINO_BIN)/avr-objcopy
 AVR_SIZE    = $(ARDUINO_BIN)/avr-size
 
 AVR_DUDE    = avrdude
 
-ARDUINO_UPLOAD_PORT=$(shell find /dev/cu.usbmodem* | head -n 1) # Find the Arduino port
+ARDUINO_UPLOAD_PORT=$(shell find /dev/cu.usbmodem* | head -n 1) 
 PROGRAMMER = -c jtag2updi -P $(ARDUINO_UPLOAD_PORT) -b115200 -p m4809
 
 SOURCES   := $(shell find * -type f -name "*.c")
@@ -70,7 +71,7 @@ deploy:
 	md5sum $(DEPLOYDIR)/$(TARGET)_$(TODAY).hex > $(DEPLOYDIR)/$(TARGET)_$(TODAY).md5
 
 flash:	all
-	. tsk/reset_wait # <---= Reset the Arduino & wait for reconnect ..					
+	. avr_haxx/tsk/reset_wait # <---= Reset the Arduino & wait for reconnect ..					
 	$(AVRDUDE) -U flash:w:$(TARGET).hex:i
 
 fuse:
@@ -81,4 +82,5 @@ install: flash fuse
 clean:
 	rm -f $(TARGET).elf $(TARGET).hex $(TARGET).eep $(TARGET).lss $(TARGET).srec $(TARGET)_cipher.hex $(OBJECTS)
 
-
+serial:
+	tio $(ARDUINO_UPLOAD_PORT) -b 9600 -d 8 -p none -s 1

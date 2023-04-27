@@ -57,22 +57,29 @@ Installing the source code from this GitHub page
 
 	git clone git@github.com:fuxelius/nano_every_bare_metal.git
 	cd nano_every_bare_metal
+
+### 4) Visual Studio Code
+Install [Visual Studio Code](https://code.visualstudio.com/download) and open the *nano\_every\_bare\_metal* directory.
 	
-### 4) Set path to avr-gcc in Arduino Library
+### 5) Set path to avr-gcc in Arduino Library
 Find out the right path to your avr-gcc binaries, and edit this path in *Makefile*
 
 	ARDUINO_BIN = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
 	
-### 5) Test if it works
+### 6) Test if it works
 
 	make
 	make flash
+	make serial
 	
 When you flash the software the USB device is shown, Use it to connect the serial to the board. In this case the device name is: /dev/cu.usbmodem2244201
 
 	tio /dev/cu.usbmodem2244201 -b 9600 -d 8 -p none -s 1
 	
+	
 Now it should show a scrolling 'Hello world!'
+
+Quit serial with CTRL+T Q
 	
 ## C Development
 
@@ -92,10 +99,17 @@ When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for t
 
 <img src="doc/pic/k_and_r.png"  width="200">
 
+
+
+The [C Programming Language](https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628) (sometimes termed K&R, after its authors' initials) is a computer programming book written by Brian Kernighan and Dennis Ritchie, the latter of whom originally designed and implemented the language, as well as co-designed the Unix operating system with which development of the language was closely intertwined. The book was central to the development and popularization of the C programming language and is still widely read and used today. Because the book was co-authored by the original language designer, and because the first edition of the book served for many years as the de facto standard for the language, the book was regarded by many to be the authoritative reference on C
+
 <img src="doc/pic/modernC.png"  width="200">
+
+[Modern C](https://www.amazon.se/Modern-C-Jens-Gustedt/dp/1617295817)
 
 <img src="doc/pic/algorithms.png"  width="200">
 
+[Algorithms With C](https://www.amazon.se/Mastering-Algorithms-C-Kyle-Loudon/dp/1565924533/ref=sr_1_9?crid=ZTTNRRAL9B08&keywords=algorithms+with+c&qid=1682612292&sprefix=algorithms+with+c%2Caps%2C159&sr=8-9)
 
 ## Systems internals
 
@@ -126,6 +140,10 @@ descibe file structure and separate compilation, the .deploy and .object directo
 <img src="doc/pic/NanoEveryPinout.png"  width="600">
 
 ## References and Further Resources
+
+https://tomalmy.com/category/arduino-nano-every/
+
+https://www.freertos.org/microchip-atmega-0-demo.html
 
 https://makefiletutorial.com
 
