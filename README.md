@@ -1,4 +1,4 @@
-# Bare metal C-development on the Arduino Nano Every board
+# Bare Metal C-development on the Arduino Nano Every Board with MacOS
 	By Hans-Henrik Fuxelius, 2023-04-27
 
 <img src="doc/pic/TheNano.png"  width="600">
@@ -8,7 +8,7 @@ The [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) b
 
 The Arduino Nano Every differentiate itself somewhat from other Arduino boards with an Atmel processor. Usually an bootloader is present in EEPROM for uploading software to the microcontroller. The Nano Every does not use an bootloader but is programmed directly by the Unified Program and Debug Interface (UDPI) protocol. The  UPDI is a Microchip proprietary interface for external programming and on-chip debugging of a device. This programming can be done directly with harware tools ([Atmel-ICE Debugger](https://onlinedocs.microchip.com/pr/GUID-DDB0017E-84E3-4E77-AAE9-7AC4290E5E8B-en-US-4/index.html?GUID-9B349315-2842-4189-B88C-49F4E1055D7F)) or by software ([jtag2udpi](https://github.com/ElTangas/jtag2updi#)) in an embedded processor. In this case the ATSAMD11D14A ARM Cortex M0+ processor acts as a bridge between USB and the main ATmega4809 microcontroller. The upside of not using a bootloader is obvious. You have the entire memory space for your own project and can also develop your own bootloaders without have to worry about bricking it. UDPI is also much quicker than using a bootloader, usually just a few seconds. In this sense I personally think the **Nano Every is the coolest and most versatile** of the entire lineup of Arduino AVR development boards. For a very cheap price you get both the development board and a USB cable that has very few drawbacks and no extra cost added in the future, as often is the case in embedded development as you might find out ;)
 
-## Arduini IDE
+## Arduino IDE
 Arduino is designed to make the microcontroller world more accessible to students and beginners. The [Arduino IDE](https://www.arduino.cc/en/software) is excellent to get you started in embedded programming. The excellent  thing with the Arduino hardware is that it is absolutely general and not locked down to or limited to use only with the Arduino IDE. The Arduino version of C++ is adapted to work with many different processors and different architechtures. In some sense the least common denominator governs how and what can be done within the framework. To unleash the full potential of the ATmega4809 you need to use its native libraries and do programming in standard C.
 
 <img src="doc/pic/arduino_ide.png"  width="600">
@@ -34,17 +34,17 @@ Compiling and uploading the c-code to the board takes place in **Bash** by calli
 
 To connect to the board a serial interface is needed. We are going to use [tio](https://github.com/tio/tio) for this which is a simple serial device tool which features a straightforward command-line and configuration file interface to easily connect to serial TTY devices for basic I/O operations. To make a simpler serial device tool for talking with serial TTY devices with less focus on classic terminal/modem features and more focus on the needs of embedded developers and hackers.
 
-## Installation and Configuration
+## Installation, Configuration and Test
 ### Follow these steps to install a complete system:
 
 ### 1) Arduino IDE
 
-<img src="doc/pic/install_ide.png"  width="600">
+<img src="doc/pic/install_ide.png"  width="400">
 
-Download the latest [Arduino IDE](https://docs.arduino.cc/software/ide-v2) and install it if you have not already done that. We are going to use its **avr-gcc** compiler and tools. 
+Download the latest [Arduino IDE](https://docs.arduino.cc/software/ide-v2) and install it if you have not already done that. We are going to use its [avr toolchain](https://github.com/arduino/toolchain-avr) for **avr-gcc** compiler and tools. 
 
 ### 2) Homebrew
-You need to install [Homebrew](https://mac.install.guide/homebrew/index.html) in order to install a number of crusial components to get the system running.
+You need to install [Homebrew](https://mac.install.guide/homebrew/index.html) in order to install a number of crucial components to get the system running.
 
 Once Homebrew is installed, install the following programs.
 
@@ -68,7 +68,46 @@ Find out the right path to your avr-gcc binaries, and edit this path in *Makefil
 	make
 	make flash
 	
+When you flash the software the USB device is shown, Use it to connect the serial to the board. In this case the device name is: /dev/cu.usbmodem2244201
+
+	tio /dev/cu.usbmodem2244201 -b 9600 -d 8 -p none -s 1
+	
+Now it should show a scrolling 'Hello world!'
+	
+## C Development
+
+descibe file structure and separate compilation, the .deploy and .object directory
+
+[AVR Libc](https://www.nongnu.org/avr-libc/user-manual/group__avr__pgmspace.html)
+
+[AVR Libc 2.1.0 Manual](doc/avr-libc-user-manual-2.1.0.pdf)
+
+[avr-gcc compiler flags](doc/avr-gcc compiler flags.html)
+
+When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for the atmega4809 microcontroller it is handy to look at its [header file](doc/iom4809.h) for naming registers and ports in c-code. 
+
+
+## Some C Books
+
+
+<img src="doc/pic/k_and_r.png"  width="200">
+
+<img src="doc/pic/modernC.png"  width="200">
+
+<img src="doc/pic/algorithms.png"  width="200">
+
+
 ## Systems internals
+
+[Microchip Packs Repository](https://packs.download.atmel.com)
+
+[Toolchains for AVR Microcontrollers](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers)
+
+<img src="doc/pic/avr_haxx.png"  width="600">
+
+<img src="doc/pic/avr8.png"  width="600">
+
+<img src="doc/pic/microchip.png"  width="600">
 
 descibe file structure and separate compilation, the .deploy and .object directory
 
