@@ -103,6 +103,16 @@ When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for t
 
 [Toolchains for AVR Microcontrollers](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers)
 
+Microchip does not make it easy. Instead of them simply providing a full avr-libc to build, we have to hack things together. Hopefully "upstream" avr-libc will soon support tinyAVR 1-series (like attiny1614), and this could be skipped.
+
+Get Atmel/Microchip ATtiny_DFP Pack (try http://packs.download.atmel.com/) It is called something like "Atmel.ATtiny_DFP.1.3.229.atpack". It's really just a zip archive with .atpack extention.
+
+Unpack and enter into directory, then we must copy the following 3 files from Atmel pack:
+
+gcc/dev/attiny1614/avrxmega3/libattiny1614.a,
+gcc/dev/attiny1614/avrxmega3/crtattiny1614.o,
+include/avr/iotn1614.h:
+
 <img src="doc/pic/avr_haxx.png"  width="600">
 
 <img src="doc/pic/avr8.png"  width="600">
@@ -110,6 +120,10 @@ When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for t
 <img src="doc/pic/microchip.png"  width="600">
 
 descibe file structure and separate compilation, the .deploy and .object directory
+
+## Arduino Nano Every Pinout
+
+<img src="doc/pic/NanoEveryPinout.png"  width="600">
 
 ## References and Further Resources
 

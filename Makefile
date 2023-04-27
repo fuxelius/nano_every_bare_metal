@@ -18,7 +18,6 @@ DEVICE      = atmega4809
 CLOCK       = 2666666
 
 ARDUINO_BIN = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
-
 AVR_GCC     = $(ARDUINO_BIN)/avr-gcc
 AVR_OBJCOPY = $(ARDUINO_BIN)/avr-objcopy
 AVR_SIZE    = $(ARDUINO_BIN)/avr-size
