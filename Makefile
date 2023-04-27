@@ -1,8 +1,6 @@
-# Name: Makefile
+# Name:   Makefile
 # Author: Hans-Henrik Fuxelius
-# Copyright: OSAN.TECH
-# Date: 2023-04-21
-# License: Copyright belongs to OSAN.TECH
+# Date:   2023-04-21
 
 # https://makefiletutorial.com
 
@@ -18,8 +16,6 @@
 TARGET      = at4809_uart
 DEVICE      = atmega4809
 CLOCK       = 2666666
-
-EEIMAGE     = EEPROM_06.eep
 
 ARDUINO_BIN = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
 
@@ -69,15 +65,10 @@ $(OBJECTS): $(OBJDIR)/%.o: %.c
 
 -include $(OBJECTS:.o=.d)
 
-cipher: $(TARGET).hex
-	xtea_encipher -o $(TARGET)_cipher.hex -i $(TARGET).hex
-
 deploy:
 	mkdir -p $(DEPLOYDIR)
 	cp $(TARGET).hex $(DEPLOYDIR)/$(TARGET)_$(TODAY).hex
 	md5sum $(DEPLOYDIR)/$(TARGET)_$(TODAY).hex > $(DEPLOYDIR)/$(TARGET)_$(TODAY).md5
-	cp $(TARGET)_cipher.hex $(DEPLOYDIR)/$(TARGET)_cipher_$(TODAY).hex
-	md5sum $(DEPLOYDIR)/$(TARGET)_cipher_$(TODAY).hex > $(DEPLOYDIR)/$(TARGET)_cipher_$(TODAY).md5
 
 flash:	all
 	. tsk/reset_wait # <---= Reset the Arduino & wait for reconnect ..					
@@ -85,9 +76,6 @@ flash:	all
 
 fuse:
 	$(AVRDUDE) $(FUSES)
-
-eeprom:
-	$(AVRDUDE) -U eeprom:w:$(EEIMAGE):i
 
 install: flash fuse
 
