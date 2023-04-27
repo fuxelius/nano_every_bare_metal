@@ -15,6 +15,7 @@
 
 TARGET      = at4809_uart
 DEVICE      = atmega4809
+DEVICE_ID   = m4809
 CLOCK       = 2666666
 
 TOOLCHAIN   = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
@@ -26,7 +27,7 @@ AVR_SIZE    = $(TOOLCHAIN)/avr-size
 AVR_DUDE    = avrdude
 
 SERIAL_PORT = $(shell find /dev/cu.usbmodem* | head -n 1) 
-PROGRAMMER  = -c jtag2updi -P $(SERIAL_PORT) -b115200 -p m4809
+PROGRAMMER  = -c jtag2updi -P $(SERIAL_PORT) -b115200 -p $(DEVICE_ID)
 
 SOURCES   := $(shell find * -type f -name "*.c")
 TODAY     := $(shell date +%Y%m%d_%H%M%S)

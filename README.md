@@ -4,7 +4,7 @@
 <img src="doc/pic/TheNano.png"  width="600">
 
 ## Introduction
-The [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board is equipped with the ATmega4809 microcontroller that came to market in 2018. It is a modern replacement of the 20 year old ATmega328p with being better in almost everything save EEPROM that is just a quarter of the previous. It has an 8-bit AVR processor developed by Microchip/Atmel that can run up to 20MHz on an internal clock crystal. It comes with 6KB of SRAM, 48KB of flash, and 256 bytes of EEPROM. The chip features the latest technologies like flexible and efficient-power architecture, including Event System and Sleepwalking, precious analog features, and advanced peripherals.
+The [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board is equipped with the [ATmega4809 microcontroller](https://www.microchip.com/en-us/product/ATMEGA4809) (The [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf), which also includes ATmega808, ATmega809, ATmega1608, ATmega1609, ATmega3208, ATmega3209 and ATmega4808) that came to market in 2018. It is a modern replacement of the 20 year old ATmega328p with being better in almost everything save EEPROM that is just a quarter of the previous. It has an 8-bit AVR processor developed by Microchip/Atmel that can run up to 20MHz on an internal clock crystal. It comes with 6KB of SRAM, 48KB of flash, and 256 bytes of EEPROM. The chip features the latest technologies like flexible and efficient-power architecture, including Event System and Sleepwalking, precious analog features, and advanced peripherals.
 
 The Arduino Nano Every differentiate itself somewhat from other Arduino boards with an Atmel processor. Usually an bootloader is present in EEPROM for uploading software to the microcontroller. The Nano Every does not use an bootloader but is programmed directly by the Unified Program and Debug Interface (UDPI) protocol. The  UPDI is a Microchip proprietary interface for external programming and on-chip debugging of a device. This programming can be done directly with harware tools ([Atmel-ICE Debugger](https://onlinedocs.microchip.com/pr/GUID-DDB0017E-84E3-4E77-AAE9-7AC4290E5E8B-en-US-4/index.html?GUID-9B349315-2842-4189-B88C-49F4E1055D7F)) or by software ([jtag2udpi](https://github.com/ElTangas/jtag2updi#)) in an embedded processor. In this case the ATSAMD11D14A ARM Cortex M0+ processor acts as a bridge between USB and the main ATmega4809 microcontroller. The upside of not using a bootloader is obvious. You have the entire memory space for your own project and can also develop your own bootloaders without have to worry about bricking it. UDPI is also much quicker than using a bootloader, usually just a few seconds. In this sense I personally think the **Nano Every is the coolest and most versatile** of the entire lineup of Arduino AVR development boards. For a very cheap price you get both the development board and a USB cable that has very few drawbacks and no extra cost added in the future, as often is the case in embedded development as you might find out ;)
 
@@ -117,6 +117,8 @@ The [C Programming Language](https://www.amazon.com/Programming-Language-2nd-Bri
 
 [Toolchains for AVR Microcontrollers](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers)
 
+Microchip.ATmega_DFP.3.0.158.atpack
+
 Microchip does not make it easy. Instead of them simply providing a full avr-libc to build, we have to hack things together. Hopefully "upstream" avr-libc will soon support tinyAVR 1-series (like attiny1614), and this could be skipped.
 
 Get Atmel/Microchip ATtiny_DFP Pack (try http://packs.download.atmel.com/) It is called something like "Atmel.ATtiny_DFP.1.3.229.atpack". It's really just a zip archive with .atpack extention.
@@ -129,9 +131,9 @@ include/avr/iotn1614.h:
 
 <img src="doc/pic/avr_haxx.png"  width="600">
 
-<img src="doc/pic/avr8.png"  width="600">
-
 <img src="doc/pic/microchip.png"  width="600">
+
+<img src="doc/pic/include_files.png"  width="600">
 
 descibe file structure and separate compilation, the .deploy and .object directory
 
