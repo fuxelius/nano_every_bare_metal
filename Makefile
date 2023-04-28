@@ -2,8 +2,6 @@
 # Author: Hans-Henrik Fuxelius
 # Date:   2023-04-27
 
-# https://makefiletutorial.com
-
 # DEVICE ....... The AVR device you compile for
 # CLOCK ........ Target AVR clock rate in Hertz
 # OBJECTS ...... The object files created from your source files. This list is
@@ -26,8 +24,9 @@ PARTNO      = m4809
 ######################################################################################
 # These paths are relocateble to serve multiple projects
 TOOLCHAIN_PATH  = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
+# TOOLCHAIN_PATH  = /Volumes/Sky/AVR/avr-toolchain/bin
 AVR_HAXX_PATH   = avr_haxx
-# AVR_HAXX_PATH   = /Volumes/Sky/AVR-GCC/avr_haxx
+# AVR_HAXX_PATH   = /Volumes/Sky/AVR/avr_haxx
 
 ######################################################################################
 AVR_GCC     = $(TOOLCHAIN_PATH)/avr-gcc

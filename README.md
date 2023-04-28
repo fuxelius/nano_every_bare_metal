@@ -144,11 +144,11 @@ Not knowing which image is the correct one and go into production can make it or
 
 <img src="doc/pic/k_and_r.png"  width="200"> <img src="doc/pic/modernC.png"  width="200"> <img src="doc/pic/algorithms.png"  width="200">
 
-The [C Programming Language](https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628) (sometimes termed K&R, after its authors' initials) is a computer programming book written by Brian Kernighan and Dennis Ritchie, the latter of whom originally designed and implemented the language, as well as co-designed the Unix operating system with which development of the language was closely intertwined. The book was central to the development and popularization of the C programming language and is still widely read and used today. Because the book was co-authored by the original language designer, and because the first edition of the book served for many years as the de facto standard for the language, the book was regarded by many to be the authoritative reference on C
+The [C Programming Language](https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628) (sometimes termed K&R, after its authors' initials) is a computer programming book from 1978 written by **Brian Kernighan** and **Dennis Ritchie**, the latter of whom originally designed and implemented the language, as well as co-designed the Unix operating system with which development of the language was closely intertwined. The book was central to the development and popularization of the C programming language and is still widely read and used today. Because the book was co-authored by the original language designer, and because the first edition of the book served for many years as the de facto standard for the language, the book was regarded by many to be the authoritative reference on C. Its old but still a good read if you find it cheap in the thrift shop!
 
-[Modern C](https://www.amazon.se/Modern-C-Jens-Gustedt/dp/1617295817)
+[Modern C](https://www.amazon.se/Modern-C-Jens-Gustedt/dp/1617295817) by **Jens Gustedt** 2019. Modern C introduces you to modern day C programming, emphasizing the unique and new features of this powerful language. For new C coders, it starts with fundamentals like structure, grammar, compilation, and execution. From there, you’ll advance to control structures, data types, operators, and functions, as you gain a deeper understanding of what’s happening under the hood. In the final chapters, you’ll explore performance considerations, reentrancy, atomicity, threads, and type-generic programming. You’ll code as you go with concept-reinforcing exercises and skill-honing challenges along the way. Modern C focuses on the new and unique features of modern C programming. The book is based on the latest C standards and offers an up-to-date perspective on this tried-and-true language. This is an updated and extended version of Kernighan & Ritchie, and covers everything and more. Its style covers perfectly embedded development in C. Get it!!
 
-[Algorithms With C](https://www.amazon.se/Mastering-Algorithms-C-Kyle-Loudon/dp/1565924533/ref=sr_1_9?crid=ZTTNRRAL9B08&keywords=algorithms+with+c&qid=1682612292&sprefix=algorithms+with+c%2Caps%2C159&sr=8-9)
+[Algorithms With C](https://www.amazon.se/Mastering-Algorithms-C-Kyle-Loudon/dp/1565924533/ref=sr_1_9?crid=ZTTNRRAL9B08&keywords=algorithms+with+c&qid=1682612292&sprefix=algorithms+with+c%2Caps%2C159&sr=8-9) by **Kyle Loudon** shows you how to use essential data structures such as lists, stacks, queues, sets, trees, heaps, priority queues, and graphs. He explains how to use algorithms for sorting, searching, numerical analysis, data compression and data encryption. A little goldmine for embedded development!
 
 ## Makefile internals
 
@@ -190,47 +190,28 @@ The C-project folders now only need the ``Makefile`` and C-code to compile and f
 
 To understand and further develop the ``Makefile`` you need to learn how [makefiles](https://makefiletutorial.com) work. It is a bit tricky for young players, but once you got the hang of it, its really makes the day!
 
+### AVRDUDE
+[AVRDUDE](https://github.com/avrdudes/avrdude#) - AVR Downloader Uploader - is a program for downloading and uploading the on-chip memories of Atmel’s AVR microcontrollers. It can program the Flash and EEPROM, and where supported by the serial programming protocol, it can program fuse and lock bits. AVRDUDE also supplies a direct instruction mode allowing one to issue any programming instruction to the AVR chip regardless of whether AVRDUDE implements that specific feature of a particular chip. For changing parameters in AVRDUDE have a look in the [manual](https://avrdudes.github.io/avrdude/).
+
+We use a locally installed version of AVRDUDE and not the one in the Arduino avr-gcc toolchain.
+
 ## Support of Other AVR Microcontrollers
 
-The ``avr_haxx`` has files to support for the entire [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf) of microcontrollers:
- 	
- 	ATmega808
-	ATmega1608
-	ATmega1609
-	ATmega3208
-	ATmega3209 
-	ATmega4808
-	ATmega4809
-
-[Microchip Packs Repository](https://packs.download.atmel.com)
-
-[Toolchains for AVR Microcontrollers](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers)
-
-[Microchip.ATmega_DFP.3.0.158.atpack](http://packs.download.atmel.com)
-
-Microchip does not make it easy. Instead of them simply providing a full avr-libc to build, we have to hack things together. Hopefully "upstream" avr-libc will soon support tinyAVR 1-series (like attiny1614), and this could be skipped.
-
-Get Atmel/Microchip ATtiny_DFP Pack (try http://packs.download.atmel.com/) It is called something like "Atmel.ATtiny_DFP.1.3.229.atpack". It's really just a zip archive with .atpack extention.
-
-Unpack and enter into directory, then we must copy the following 3 files from Atmel pack:
-
-	gcc/dev/attiny1614/avrxmega3/libattiny1614.a,
-	gcc/dev/attiny1614/avrxmega3/crtattiny1614.o,
-	include/avr/iotn1614.h:
-
-Supporting Other AVR Microcontrollers
-
-
+The ``avr_haxx`` has included files to support the [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf) of microcontrollers:
 
 <img src="doc/pic/avr_haxx.png"  width="600">
 
-To add support for other microcontrolles get them from atmel packs
+If you want to add support for other microcontrollers from AVR you can peek into [Microchip Packs Repository](http://packs.download.atmel.com) and click on the links to find your controller. When you have found it, download the pack to your computer. It is called something like ``Microchip.ATmega_DFP.3.0.158.atpack``. It's really just a zip archive with ``.atpack`` extention so rename it to ``.zip`` and unpack it and enter into its directory.
+
+* Copy the relevant microcontroller folder from ``Microchip.ATmega_DFP.3.0.158.atpack/gcc/dev/`` to the local ``avr_haxx/devices`` folder
 
 <img src="doc/pic/microchip.png"  width="600">
 
+* Copy the relevant microcontroller header from ``Microchip.ATmega_DFP.3.0.158.atpack/include/avr/`` to the local ``avr_haxx/include/avr/`` folder
+
 <img src="doc/pic/include_files.png"  width="600">
 
-descibe file structure and separate compilation, the .deploy and .object directory
+Remember to also make the relavant changes to the ``Makefile`` for it to work! You need to update ``DEVICE``, ``PARTNO``, ``CLOCK``, ``FUSES``, ``PROGRAMMER`` and compiler flags
 
 ## Arduino Nano Every Pinout
 
@@ -238,28 +219,15 @@ descibe file structure and separate compilation, the .deploy and .object directo
 
 ## References and Further Resources
 
-### The Nano Every Board Insights
+### Far Inside The Arduino: Nano Every Supplement
 
 <img src="doc/pic/almy.png"  width="200">
 
-Tom Almy has a written an excellent book ([Far Inside The Arduino: Nano Every Supplement](https://www.amazon.com/Far-Inside-Arduino-Every-Supplement/dp/B08GFL6VBF/ref=sr_1_1?crid=1ATDVO5JQV8GI&keywords=Far+Inside+The+Arduino%3A+Nano+Every+Supplement&qid=1682675028&sprefix=far+inside+the+arduino+nano+every+supplement%2Caps%2C202&sr=8-1)) on the internals of the Nano Every board and have a [homepage](https://tomalmy.com/category/arduino-nano-every/) that is updated regularly on the Arduino Nano Every board and software projects conneted to it. He has some interesting blog posts about [FreeRTOS](https://www.freertos.org/microchip-atmega-0-demo.html) on the ATmega4809 (Arduino Nano Every)
+**Tom Almy** has a written an excellent book ([Far Inside The Arduino: Nano Every Supplement](https://www.amazon.com/Far-Inside-Arduino-Every-Supplement/dp/B08GFL6VBF/ref=sr_1_1?crid=1ATDVO5JQV8GI&keywords=Far+Inside+The+Arduino%3A+Nano+Every+Supplement&qid=1682675028&sprefix=far+inside+the+arduino+nano+every+supplement%2Caps%2C202&sr=8-1)) on the internals of the Nano Every board and have a [homepage](https://tomalmy.com/category/arduino-nano-every/) that is updated regularly on the Arduino Nano Every board and software projects conneted to it. He has some interesting blog posts about [FreeRTOS](https://www.freertos.org/microchip-atmega-0-demo.html) on the ATmega4809 (Arduino Nano Every)
 
 
 ### Whats in The Box - Arduino Nano Every Package
 <img src="doc/pic/foam.png"  width="150"> <img src="doc/pic/box2.png"  width="150"> <img src="doc/pic/box3.png"  width="150"> <img src="doc/pic/card.png"  width="135"> <img src="doc/pic/stickers.png"  width="135">
 
-<img src="doc/pic/closeup.png"  width="740">
+<img src="doc/pic/closeup.png"  width="400">
 
-
-
-[avrdude manual](https://github.com/avrdudes/avrdude#)
-
-[avrdude](https://avrdudes.github.io/avrdude/)
-
-https://tomalmy.com/category/arduino-nano-every/
-
-https://www.freertos.org/microchip-atmega-0-demo.html
-
-https://makefiletutorial.com
-
-https://raw.githubusercontent.com/tio/tio/master/man/tio.1.txt
