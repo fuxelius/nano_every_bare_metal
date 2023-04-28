@@ -1,12 +1,12 @@
-# Develop Like a Pro on the 'Arduino Nano Every'-Board with MacOS
+# Develop Like a Pro for the 'Arduino Nano Every'-Board with a Mac
 	
-**``By Hans-Henrik Fuxelius, 2023-04-27``
+**``By Hans-Henrik Fuxelius, 2023-04-28``
 
 <img src="doc/pic/TheNano.png"  width="600">
 
 ## Introduction
 
-Have you been tinkering around with these cheap and accesible Arduino-boards for a while, and felt like. Hmm whats the next step up the ladder? A first step could be to set up a productive environment for C development! This short introduction is **made to be followed** with the [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board on MacOS, but once the ``Makefile`` is clearly understood you could readily, with some effort, adapt it to any microcontroller from the AVR family (tinyAVR, megaAVR, XMEGA, ...) and also to Ubunto or Fedora.
+Have you been tinkering around with these cheap and accesible Arduino-boards for a while, and felt like. Hmm whats the next step up the ladder? A first step could be to set up a productive environment for C development! This short introduction is **made to be followed** with the [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board on MacOS, but once the ``Makefile`` is clearly understood you could readily, with some effort, adapt it to any microcontroller from the AVR family (tinyAVR, megaAVR, XMEGA, ...) and also to Ubuntu or Fedora.
 
 The Arduino Nano Every board is equipped with the [ATmega4809 microcontroller](https://www.microchip.com/en-us/product/ATMEGA4809) (The [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf), which also includes ATmega808, ATmega809, ATmega1608, ATmega1609, ATmega3208, ATmega3209 and ATmega4808) that came to market in 2019. It is a modern replacement of the 20 year old ATmega328p with being better in almost every regard save EEPROM that is just a quarter of the previous. It has an 8-bit AVR processor developed by Microchip/Atmel that can run up to 20MHz on an internal clock crystal. It comes with 6KB of SRAM, 48KB of flash, and 256 bytes of EEPROM. The chip features the latest technologies like flexible and efficient-power architecture, including Event System and Sleepwalking, precious analog features, and advanced peripherals.
 
@@ -22,7 +22,7 @@ Arduino is designed to make the microcontroller world more accessible to student
 <img src="doc/pic/arduino_ide.png"  width="600">
 
 ## Bare Metal Development
-If you develop in Windows it is easy to get started with [Microchip Studio](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio) which is free of cost and a very nice environment to work in. With that said. However. If you, like me, are used to work in an UNIX environment the locked in Windows environment feels a bit narrow at times, especially if you are used to do development and programming on Ubuntu or MacOS. In industry Windows is standard but for many students and researchers at university are more used to Apple laptops and desktops.
+If you develop in Windows it is easy to get started with [Microchip Studio](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio) which is free of cost and a very nice environment to work in. With that said. However. If you, like me, are used to work in an UNIX environment the locked-in Windows environment feels a bit narrow at times, especially if you are used to do development and programming on Ubuntu or MacOS. In industry Windows is standard but for many students and researchers at university Apple laptops and desktops are common.
 
 
 For those of us who are used to develop with standard C (C99) in UNIX for Apple Silicon, Ubuntu or Fedora and want to get started there are fewer alternatives than in Windows that is standard for electronics and microcontroller development.
@@ -98,33 +98,33 @@ The ``Makefile`` is set up for [separate compilation](https://users.cs.utah.edu/
 
 <img src="doc/pic/folder_depth.png" width="400">
 
-All temporary object files are placed in the ``./object`` folder to make the source-code folder less littered with temporary code. If you want the object-code just traverse the ``./object`` folder. 
+All temporary object files are placed in the ``./object`` folder to make the source-code folder less cluttered with temporary code. If you need to inspect the object-code just traverse the ``./object`` folder. 
 
 You only have to add the header files to ``main.c`` with path and the linker resolves the rest for you.
 
 1.  Edit your C-code
 
-2.  Type ``make`` to separate compile the project code within the folder just . This compiles all C-code and C-headers to object code and put it in the ``./object`` folder. In the same step it links it to an executable ELF file and produce the HEX image for it with the name given in the ``Makefile`` labeled ``TARGET``. 
+2.  Type ``make`` to separate compile the project code within the folder. This compiles all C-code and C-headers to object code and put it in the ``./object`` folder. In the same step it links it to an executable ELF file and produce the HEX image for it with the name given in the ``Makefile`` labeled ``TARGET``. 
 
 3.  Type ``make flash`` to upload the HEX image to the microcontroller. 
 
-4.  Type ``make serial`` to connect to the UART and let you communicate with it in text.
+4.  Type ``make serial`` to connect to the UART and lets you communicate with it.
 
 5. GOTO 1.
 
-Type ``make clean`` to remove temporary object code and compiled files.
+* Type ``make clean`` to remove temporary object code and compiled files.
 
-Type ``make fuse`` to set the fuses, labeled ``FUSES`` in the ``Makefile``
+* Type ``make fuse`` to set the fuses, labeled ``FUSES`` in the ``Makefile``
 
-Type ``make install`` to compile and set fuses at the same time.
+* Type ``make install`` to compile and set fuses at the same time.
 
-Type ``make deploy`` to create an MD5-typed image with timestamp in the ``./deploy`` folder
+* Type ``make deploy`` to create an MD5-typed image with timestamp in the ``./deploy`` folder
 
 ### AVR-GCC Compiler and Libc library
 
-Most fundamental for developing in ``C`` for the AVR microcontrollera are the [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc) compiler and the [AVR Libc](https://www.nongnu.org/avr-libc/user-manual/group__avr__pgmspace.html) library and the [AVR Libc 2.1.0 Manual](doc/avr-libc-user-manual-2.1.0.pdf). Having the [avr-gcc compiler flags](doc/avr-gcc compiler flags.html) is also necessary. 
+Most fundamental for developing in **C** for the AVR microcontrollers is knowledge in the [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc) compiler and the [AVR Libc](https://www.nongnu.org/avr-libc/user-manual/group__avr__pgmspace.html) library. The [AVR Libc 2.1.0 Manual](doc/avr-libc-user-manual-2.1.0.pdf) is absolutely crusial for understanding the capabilities of these microcontrollers. All code you find on GitHub or other resources directly or indirectly reference these. Having the [avr-gcc compiler flags](doc/avr-gcc compiler flags.html) is also necessary. 
 
-When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for the atmega4809 microcontroller it is handy to look at its [header file](doc/iom4809.h) for naming registers and ports in c-code so it comply with standard development on AVR platform.
+When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for the atmega4809 microcontroller it is handy to look at its [header file](doc/iom4809.h) for naming conventions on registers and ports in C-code so it comply with standard development on the AVR platform.
 
 ### Image Deployment
 Once a HEX image is ready for the test phase it should go into deployment. 
@@ -142,41 +142,35 @@ Not knowing which image is the correct one and go into production can make it or
 
 ## Some C Books
 
-<img src="doc/pic/k_and_r.png"  width="200">
-
-
+<img src="doc/pic/k_and_r.png"  width="200"> <img src="doc/pic/modernC.png"  width="200"> <img src="doc/pic/algorithms.png"  width="200">
 
 The [C Programming Language](https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628) (sometimes termed K&R, after its authors' initials) is a computer programming book written by Brian Kernighan and Dennis Ritchie, the latter of whom originally designed and implemented the language, as well as co-designed the Unix operating system with which development of the language was closely intertwined. The book was central to the development and popularization of the C programming language and is still widely read and used today. Because the book was co-authored by the original language designer, and because the first edition of the book served for many years as the de facto standard for the language, the book was regarded by many to be the authoritative reference on C
 
-<img src="doc/pic/modernC.png"  width="200">
-
 [Modern C](https://www.amazon.se/Modern-C-Jens-Gustedt/dp/1617295817)
-
-<img src="doc/pic/algorithms.png"  width="200">
 
 [Algorithms With C](https://www.amazon.se/Mastering-Algorithms-C-Kyle-Loudon/dp/1565924533/ref=sr_1_9?crid=ZTTNRRAL9B08&keywords=algorithms+with+c&qid=1682612292&sprefix=algorithms+with+c%2Caps%2C159&sr=8-9)
 
 ## Makefile internals
 
-TARGET: the name of the project, resulting name is TARGET.hex. Change it to a proper name for your project
+``TARGET``: The name of the project, resulting name is ``TARGET.hex``. Change it to a proper name for your project
 
-CLOCK: The fuses are set to 16MHz and default for 4809 is to divide by 6 that gives 2666666
+``CLOCK``: The fuses are set to 16MHz and default for 4809 is to divide by 6 that gives 2666666
 
-FUSES: These are given in the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf)
+``FUSES``: These are given in the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf)
 
-DEVICE: You can get the proper name to support other AVR MCUs than 4809 in [Microchip Packs Repository](https://packs.download.atmel.com)
+``DEVICE``: You can get the proper name to support other AVR MCUs than 4809 in [Microchip Packs Repository](https://packs.download.atmel.com)
 
-PARTNO that goes into the [avrdude](https://github.com/avrdudes/avrdude#) command line comes from the list of supported AVR microcontrollers in the avrdude [manual](https://avrdudes.github.io/avrdude/) . Here you can find all supported devices. So m4809 is a short for ATmega4809. If you want to use another microcontroller, just look it up in the list.
+``PARTNO`` that goes into the [avrdude](https://github.com/avrdudes/avrdude#) command line comes from the list of supported AVR microcontrollers in the avrdude [manual](https://avrdudes.github.io/avrdude/) . Here you can find all supported devices. So ``m4809`` is a short for ATmega4809. If you want to use another microcontroller, just look it up in the list.
 
-Unless you get DEVICE and PARTNO right it will not compile and upload correctly, it is bad at guessing.
+Unless you get ``DEVICE`` and ``PARTNO`` right it will not compile and upload correctly, it is bad at guessing.
 
-TOOLCHAIN\_PATH: This refers into the library directory of the Arduino distribution, ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin. A problem with this is that it can change if a new Arduino IDE installation takes place and removes the old one. A remedy to this is to copy the AVR toolchain out of Arduino IDE to a safe place like:
+``TOOLCHAIN_PATH``: This refers into the library directory of the Arduino distribution, ``~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin``. A problem with this is that it can change if a new Arduino IDE installation takes place and removes the old one. A remedy to this is to copy the AVR toolchain out of Arduino IDE to a safe place like:
 
 	cp ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin \
 	    /Volumes/Sky/AVR/avr-toolchain/
 
 
-AVR\_HAXX\_PATH: This should not really reside in the same folder as the code, but shold be moved to the same folder as TOOLCHAIN\_PATH resides in, so:
+``AVR_HAXX_PATH``: This should not really reside in the same folder as the code, but shold be moved to the same folder as ``TOOLCHAIN_PATH`` resides in, so:
 
 	mv avr_haxx /Volumes/Sky/AVR/avr_haxx
 
@@ -198,6 +192,16 @@ To understand and further develop the ``Makefile`` you need to learn how [makefi
 
 ## Support of Other AVR Microcontrollers
 
+The ``avr_haxx`` has files to support for the entire [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf) of microcontrollers:
+ 	
+ 	ATmega808
+	ATmega1608
+	ATmega1609
+	ATmega3208
+	ATmega3209 
+	ATmega4808
+	ATmega4809
+
 [Microchip Packs Repository](https://packs.download.atmel.com)
 
 [Toolchains for AVR Microcontrollers](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers)
@@ -216,15 +220,7 @@ Unpack and enter into directory, then we must copy the following 3 files from At
 
 Supporting Other AVR Microcontrollers
 
-The avr_haxx has files to support for the entire [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf) of microcontrollers:
- 	
- 	ATmega808
-	ATmega1608
-	ATmega1609
-	ATmega3208
-	ATmega3209 
-	ATmega4808
-	ATmega4809
+
 
 <img src="doc/pic/avr_haxx.png"  width="600">
 
@@ -242,14 +238,17 @@ descibe file structure and separate compilation, the .deploy and .object directo
 
 ## References and Further Resources
 
+### The Nano Every Board Insights
+
 <img src="doc/pic/almy.png"  width="200">
 
 Tom Almy has a written an excellent book ([Far Inside The Arduino: Nano Every Supplement](https://www.amazon.com/Far-Inside-Arduino-Every-Supplement/dp/B08GFL6VBF/ref=sr_1_1?crid=1ATDVO5JQV8GI&keywords=Far+Inside+The+Arduino%3A+Nano+Every+Supplement&qid=1682675028&sprefix=far+inside+the+arduino+nano+every+supplement%2Caps%2C202&sr=8-1)) on the internals of the Nano Every board and have a [homepage](https://tomalmy.com/category/arduino-nano-every/) that is updated regularly on the Arduino Nano Every board and software projects conneted to it. He has some interesting blog posts about [FreeRTOS](https://www.freertos.org/microchip-atmega-0-demo.html) on the ATmega4809 (Arduino Nano Every)
 
 
+### Whats in The Box - Arduino Nano Every Package
+<img src="doc/pic/foam.png"  width="150"> <img src="doc/pic/box2.png"  width="150"> <img src="doc/pic/box3.png"  width="150"> <img src="doc/pic/card.png"  width="135"> <img src="doc/pic/stickers.png"  width="135">
 
-
-
+<img src="doc/pic/closeup.png"  width="740">
 
 
 
