@@ -1,6 +1,6 @@
 # Name:   Makefile
 # Author: Hans-Henrik Fuxelius
-# Date:   2023-04-21
+# Date:   2023-04-27
 
 # https://makefiletutorial.com
 
@@ -13,36 +13,45 @@
 #                is connected.
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
+######################################################################################
 TARGET      = at4809_uart
-DEVICE      = atmega4809
-DEVICE_ID   = m4809
 CLOCK       = 2666666
+FUSE2 		= 0x01 
+FUSE5 		= 0xC9
+FUSE8 		= 0x00
 
-TOOLCHAIN   = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
+DEVICE      = atmega4809
+PARTNO      = m4809
 
-AVR_GCC     = $(TOOLCHAIN)/avr-gcc
-AVR_OBJCOPY = $(TOOLCHAIN)/avr-objcopy
-AVR_SIZE    = $(TOOLCHAIN)/avr-size
+######################################################################################
+# These paths are relocateble to serve multiple projects
+TOOLCHAIN_PATH  = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
+AVR_HAXX_PATH   = avr_haxx
+# AVR_HAXX_PATH   = /Volumes/Sky/AVR-GCC/avr_haxx
+
+######################################################################################
+AVR_GCC     = $(TOOLCHAIN_PATH)/avr-gcc
+AVR_OBJCOPY = $(TOOLCHAIN_PATH)/avr-objcopy
+AVR_SIZE    = $(TOOLCHAIN_PATH)/avr-size
 
 AVR_DUDE    = avrdude
 
 SERIAL_PORT = $(shell find /dev/cu.usbmodem* | head -n 1) 
-PROGRAMMER  = -c jtag2updi -P $(SERIAL_PORT) -b115200 -p $(DEVICE_ID)
+PROGRAMMER  = -c jtag2updi -P $(SERIAL_PORT) -b115200 -p $(PARTNO)
 
 SOURCES   := $(shell find * -type f -name "*.c")
 TODAY     := $(shell date +%Y%m%d_%H%M%S)
 OBJDIR    := .objects
 DEPLOYDIR := .deploy
 OBJECTS   := $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
-FUSES      = -U fuse2:w:0x01:m -U fuse5:w:0xC9:m -U fuse8:w:0x00:m 
+FUSES      = -U fuse2:w:$(FUSE2):m -U fuse5:w:$(FUSE5):m -U fuse8:w:$(FUSE8):m 
 SIZE       = $(AVR_SIZE) --format=avr --mcu=$(DEVICE) $(TARGET).elf
 
 ######################################################################################
-
 AVRDUDE = $(AVR_DUDE) $(PROGRAMMER)
 
 COMPILE = $(AVR_GCC) -Wall -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -Og -std=gnu99 \
-		  -I"avr_haxx/include" -B"avr_haxx/devices/$(DEVICE)" \
+		  -I"$(AVR_HAXX_PATH)/include" -B"$(AVR_HAXX_PATH)/devices/$(DEVICE)" \
 		  -ffunction-sections -MD -MP -fdata-sections -fpack-struct -fshort-enums -g2 
 
 ######################################################################################
@@ -72,11 +81,11 @@ deploy:
 	md5sum $(DEPLOYDIR)/$(TARGET)_$(TODAY).hex > $(DEPLOYDIR)/$(TARGET)_$(TODAY).md5
 
 flash:	all
-	. avr_haxx/reset_wait 				
+	. $(AVR_HAXX_PATH)/reset_wait 				
 	$(AVRDUDE) -U flash:w:$(TARGET).hex:i
 
 fuse:
-	. avr_haxx/reset_wait 
+	. $(AVR_HAXX_PATH)/reset_wait 
 	$(AVRDUDE) $(FUSES)
 
 install: flash fuse

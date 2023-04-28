@@ -1,12 +1,22 @@
-# Bare Metal C-development on the Arduino Nano Every Board with MacOS
+# Develop Like a Pro on the Arduino Nano Every Board with MacOS
 	By Hans-Henrik Fuxelius, 2023-04-27
 
 <img src="doc/pic/TheNano.png"  width="600">
 
 ## Introduction
-The [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board is equipped with the [ATmega4809 microcontroller](https://www.microchip.com/en-us/product/ATMEGA4809) (The [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf), which also includes ATmega808, ATmega809, ATmega1608, ATmega1609, ATmega3208, ATmega3209 and ATmega4808) that came to market in 2018. It is a modern replacement of the 20 year old ATmega328p with being better in almost everything save EEPROM that is just a quarter of the previous. It has an 8-bit AVR processor developed by Microchip/Atmel that can run up to 20MHz on an internal clock crystal. It comes with 6KB of SRAM, 48KB of flash, and 256 bytes of EEPROM. The chip features the latest technologies like flexible and efficient-power architecture, including Event System and Sleepwalking, precious analog features, and advanced peripherals.
 
-The Arduino Nano Every differentiate itself somewhat from other Arduino boards with an Atmel processor. Usually an bootloader is present in EEPROM for uploading software to the microcontroller. The Nano Every does not use an bootloader but is programmed directly by the Unified Program and Debug Interface (UDPI) protocol. The  UPDI is a Microchip proprietary interface for external programming and on-chip debugging of a device. This programming can be done directly with harware tools ([Atmel-ICE Debugger](https://onlinedocs.microchip.com/pr/GUID-DDB0017E-84E3-4E77-AAE9-7AC4290E5E8B-en-US-4/index.html?GUID-9B349315-2842-4189-B88C-49F4E1055D7F)) or by software ([jtag2udpi](https://github.com/ElTangas/jtag2updi#)) in an embedded processor. In this case the ATSAMD11D14A ARM Cortex M0+ processor acts as a bridge between USB and the main ATmega4809 microcontroller. The upside of not using a bootloader is obvious. You have the entire memory space for your own project and can also develop your own bootloaders without have to worry about bricking it. UDPI is also much quicker than using a bootloader, usually just a few seconds. In this sense I personally think the **Nano Every is the coolest and most versatile** of the entire lineup of Arduino AVR development boards. For a very cheap price you get both the development board and a USB cable that has very few drawbacks and no extra cost added in the future, as often is the case in embedded development as you might find out ;)
+Have you been tinkering around with these cheap and accesible Arduino-boards for a while, and feel like. Hmm whats the next step?
+
+The [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board is equipped with the [ATmega4809 microcontroller](https://www.microchip.com/en-us/product/ATMEGA4809) (The [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf), which also includes ATmega808, ATmega809, ATmega1608, ATmega1609, ATmega3208, ATmega3209 and ATmega4808) that came to market in 2019. It is a modern replacement of the 20 year old ATmega328p with being better in almost every regard save EEPROM that is just a quarter of the previous. It has an 8-bit AVR processor developed by Microchip/Atmel that can run up to 20MHz on an internal clock crystal. It comes with 6KB of SRAM, 48KB of flash, and 256 bytes of EEPROM. The chip features the latest technologies like flexible and efficient-power architecture, including Event System and Sleepwalking, precious analog features, and advanced peripherals.
+
+The Arduino Nano Every differentiate itself somewhat from other Arduino boards with an Atmel processor. Usually a bootloader is present in Flash memory for uploading software to the microcontroller. The Nano Every does not use an bootloader but is programmed directly by the Unified Program and Debug Interface (UDPI) protocol. The  UPDI is a Microchip proprietary interface for external programming and on-chip debugging of a device. This programming can be done directly with harware tools like the [Atmel-ICE Debugger](https://onlinedocs.microchip.com/pr/GUID-DDB0017E-84E3-4E77-AAE9-7AC4290E5E8B-en-US-4/index.html?GUID-9B349315-2842-4189-B88C-49F4E1055D7F) or by software [jtag2udpi](https://github.com/ElTangas/jtag2updi#) in an embedded processor. In this case the ATSAMD11D14A ARM Cortex M0+ processor acts as a bridge between USB and the main ATmega4809 microcontroller. The upside of not using a bootloader is obvious. You have the entire memory space for your own project and can also develop your own bootloaders without have to worry about bricking it. UDPI is also much quicker than using a bootloader, usually just a few seconds. In this sense I personally think the **Nano Every is the coolest and most versatile** of the entire lineup of Arduino AVR development boards. For a very cheap price you get both the development board and a USB cable that has very few drawbacks and at no extra cost added in the future, as often is the case in embedded development as you might find out ;)
+
+The description here is general enought for pro development in C for all the AVR microcontrollers on the MacOS, like:
+
+	tinyAVR: tinyAVR 1-series: attiny212, attiny214 ...
+	megaAVR: ATmega3208, ATmega3209 and ATmega4808 ...
+	AVR Dx:
+	XMEGA:
 
 ## Arduino IDE
 Arduino is designed to make the microcontroller world more accessible to students and beginners. The [Arduino IDE](https://www.arduino.cc/en/software) is excellent to get you started in embedded programming. The excellent  thing with the Arduino hardware is that it is absolutely general and not locked down to or limited to use only with the Arduino IDE. The Arduino version of C++ is adapted to work with many different processors and different architechtures. In some sense the least common denominator governs how and what can be done within the framework. To unleash the full potential of the ATmega4809 you need to use its native libraries and do programming in standard C.
@@ -29,6 +39,7 @@ Compiling and uploading the c-code to the board takes place in **Bash** by calli
 
 	make         # Compiles the C-program
 	make flash   # Flash the program to the controller
+	make serial  # Starts the serial monitor to the controller
 
 <img src="doc/pic/tio.png"  width="600">
 
@@ -41,10 +52,10 @@ To connect to the board a serial interface is needed. We are going to use [tio](
 
 <img src="doc/pic/install_ide.png"  width="400">
 
-Download the latest [Arduino IDE](https://docs.arduino.cc/software/ide-v2) and install it if you have not already done that. We are going to use its [avr toolchain](https://github.com/arduino/toolchain-avr) for **avr-gcc** compiler and tools. 
+Download the latest [Arduino IDE](https://docs.arduino.cc/software/ide-v2) and install it if you have not already done so. We are going to use its [avr toolchain](https://github.com/arduino/toolchain-avr) for **avr-gcc** compiler and tools. 
 
 ### 2) Homebrew
-You need to install [Homebrew](https://mac.install.guide/homebrew/index.html) in order to install a number of crucial components to get the system running.
+You need to install [Homebrew](https://mac.install.guide/homebrew/index.html) in order to install a few crucial components to get the system running.
 
 Once Homebrew is installed, install the following programs.
 
@@ -96,7 +107,6 @@ When you read the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf) for t
 
 ## Some C Books
 
-
 <img src="doc/pic/k_and_r.png"  width="200">
 
 
@@ -113,6 +123,45 @@ The [C Programming Language](https://www.amazon.com/Programming-Language-2nd-Bri
 
 ## Systems internals
 
+### The Makefile
+
+TARGET: the name of the project, resulting name is TARGET.hex. Change it to a proper name for your project
+
+CLOCK: The fuses are set to 16MHz and default for 4809 is to divide by 6 that gives 2666666
+
+FUSES: These are given in the [datasheet](doc/ATmega4808-09-DataSheet-DS40002173C.pdf)
+
+DEVICE: You can get the proper name to support other AVR MCUs than 4809 in [Microchip Packs Repository](https://packs.download.atmel.com)
+
+PARTNO that goes into the [avrdude](https://github.com/avrdudes/avrdude#) command line comes from the list of supported AVR microcontrollers in the avrdude [manual](https://avrdudes.github.io/avrdude/) . Here you can find all supported devices. So m4809 is a short for ATmega4809. If you want to use another microcontroller, just look it up in the list.
+
+Unless you get DEVICE and PARTNO right it will not compile and upload correctly, it is bad at guessing.
+
+TOOLCHAIN\_PATH: This refers into the library directory of the Arduino distribution, ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin. A problem with this is that it can change if a new Arduino IDE installation takes place and removes the old one. A remedy to this is to copy the AVR toolchain out of Arduino IDE to a safe place like:
+
+	cp ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin \
+	    /Volumes/Sky/AVR/avr-toolchain/
+
+
+AVR\_HAXX\_PATH: This should not really reside in the same folder as the code, but shold be moved to the same folder as TOOLCHAIN\_PATH resides in, so:
+
+	mv avr_haxx /Volumes/Sky/AVR/avr_haxx
+
+Now AVR tools resides locally:
+
+	/Volumes/Sky/AVR/avr-toolchain/...
+	/Volumes/Sky/AVR/avr_haxx/..
+	
+The updated paths in the Makefile should look like:
+
+	TOOLCHAIN_PATH  = /Volumes/Sky/AVR/avr-toolchain/bin
+	AVR_HAXX_PATH   = /Volumes/Sky/AVR-GCC/avr_haxx	
+	
+The C-project folders should now only have the Makefile and C-code to operate correctly
+
+
+### Others
+
 [Microchip Packs Repository](https://packs.download.atmel.com)
 
 [Toolchains for AVR Microcontrollers](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers)
@@ -125,11 +174,24 @@ Get Atmel/Microchip ATtiny_DFP Pack (try http://packs.download.atmel.com/) It is
 
 Unpack and enter into directory, then we must copy the following 3 files from Atmel pack:
 
-gcc/dev/attiny1614/avrxmega3/libattiny1614.a,
-gcc/dev/attiny1614/avrxmega3/crtattiny1614.o,
-include/avr/iotn1614.h:
+	gcc/dev/attiny1614/avrxmega3/libattiny1614.a,
+	gcc/dev/attiny1614/avrxmega3/crtattiny1614.o,
+	include/avr/iotn1614.h:
+
+### Supporting Other AVR Microcontrollers
+The avr_haxx has files to support for the entire [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf) of microcontrollers:
+ 	
+ 	ATmega808
+	ATmega1608
+	ATmega1609
+	ATmega3208
+	ATmega3209 
+	ATmega4808
+	ATmega4809
 
 <img src="doc/pic/avr_haxx.png"  width="600">
+
+To add support for other microcontrolles get them from atmel packs
 
 <img src="doc/pic/microchip.png"  width="600">
 
@@ -142,6 +204,10 @@ descibe file structure and separate compilation, the .deploy and .object directo
 <img src="doc/pic/NanoEveryPinout.png"  width="600">
 
 ## References and Further Resources
+
+[avrdude manual](https://github.com/avrdudes/avrdude#)
+
+[avrdude](https://avrdudes.github.io/avrdude/)
 
 https://tomalmy.com/category/arduino-nano-every/
 
