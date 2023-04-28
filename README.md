@@ -5,7 +5,7 @@
 
 ## Introduction
 
-Have you been tinkering around with these cheap and accesible Arduino-boards for a while, and feel like. Hmm whats the next step?
+Have you been tinkering around with these cheap and accesible Arduino-boards for a while, and felt like. Hmm whats the next step?
 
 The [Arduino Nano Every](https://store.arduino.cc/products/arduino-nano-every) board is equipped with the [ATmega4809 microcontroller](https://www.microchip.com/en-us/product/ATMEGA4809) (The [megaAVR® 0-Series](http://ww1.microchip.com/downloads/en/DeviceDoc/megaAVR0-series-Family-Data-Sheet-DS40002015B.pdf), which also includes ATmega808, ATmega809, ATmega1608, ATmega1609, ATmega3208, ATmega3209 and ATmega4808) that came to market in 2019. It is a modern replacement of the 20 year old ATmega328p with being better in almost every regard save EEPROM that is just a quarter of the previous. It has an 8-bit AVR processor developed by Microchip/Atmel that can run up to 20MHz on an internal clock crystal. It comes with 6KB of SRAM, 48KB of flash, and 256 bytes of EEPROM. The chip features the latest technologies like flexible and efficient-power architecture, including Event System and Sleepwalking, precious analog features, and advanced peripherals.
 
