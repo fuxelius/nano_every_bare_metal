@@ -1,8 +1,11 @@
-# Develop Like a Pro for the 'Arduino Nano Every'-Board with a Mac
+# C Programming for 'Arduino Nano Every' Board (ATmega4809) with a Mac and VS Code
 	
 **``By Hans-Henrik Fuxelius, 2023-04-28``
 
 <img src="doc/pic/TheNano.png"  width="600">
+
+## Objectives
+This guide will take you through the setup of the AVR C-compiler for a Mac Silicon (or Intel) computer for developing with the ATmega4809 microcontroller. Development is done in _BASH_ and _Visual Studio Code_. The result is a complete environment for serious embedded programming.
 
 ## Introduction
 
@@ -12,11 +15,11 @@ The Arduino Nano Every board is equipped with the [ATmega4809 microcontroller](h
 
 The Arduino Nano Every differentiate itself somewhat from other Arduino boards with an Atmel processor. Usually a bootloader is present in Flash memory for uploading software to the microcontroller. The Nano Every does not use an bootloader but is programmed directly by the Unified Program and Debug Interface (UDPI) protocol. The  UPDI is a Microchip proprietary interface for external programming and on-chip debugging of a device. This programming can be done directly with harware tools like the [Atmel-ICE Debugger](https://onlinedocs.microchip.com/pr/GUID-DDB0017E-84E3-4E77-AAE9-7AC4290E5E8B-en-US-4/index.html?GUID-9B349315-2842-4189-B88C-49F4E1055D7F) or by software [jtag2udpi](https://github.com/ElTangas/jtag2updi#) in an embedded processor. In this case the ATSAMD11D14A ARM Cortex M0+ processor acts as a bridge between USB and the main ATmega4809 microcontroller. The upside of not using a bootloader is obvious. You have the entire memory space for your own project and can also develop your own bootloaders without have to worry about bricking it. UDPI is also much quicker than using a bootloader, usually just a few seconds. In this sense I personally think the **Nano Every is the coolest and most versatile** of the entire lineup of Arduino AVR development boards. For a very cheap price you get both the development board and a USB cable that has very few drawbacks and at no extra cost added in the future, as often is the case in embedded development as you might find out ;)
 
-The description here is general enought for pro development in C for all the AVR microcontrollers on the MacOS, like:
+The description here is general enought for setting up a pro development in C for all the AVR microcontrollers on the MacOS.
 
 
 
-## Arduino IDE
+## Arduino IDE vs Visual Studio Code  
 Arduino is designed to make the microcontroller world more accessible to students and beginners. The [Arduino IDE](https://www.arduino.cc/en/software) is excellent to get you started in embedded programming. The excellent  thing with the Arduino hardware is that it is absolutely general and not locked down to or limited to use only with the Arduino IDE. The Arduino version of C++ is adapted to work with many different processors and different architechtures. In some sense the least common denominator governs how and what can be done within the framework. To unleash the full potential of the ATmega4809 you need to use its native libraries and do programming in standard C.
 
 <img src="doc/pic/arduino_ide.png"  width="600">
@@ -120,6 +123,8 @@ You only have to add the header files to ``main.c`` with path and the linker res
 
 * Type ``make deploy`` to create an MD5-typed image with timestamp in the ``./deploy`` folder
 
+The Arduino Nano Every on-board JTAG2UPDI programmer is known to be difficult to enter programming mode when printing to the serial monitor. So ``make flash`` migth fail several times in a row if you do heavy use of the UART.  
+
 ### AVR-GCC Compiler and Libc library
 
 Most fundamental for developing in **C** for the AVR microcontrollers is knowledge in the [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc) compiler and the [AVR Libc](https://www.nongnu.org/avr-libc/user-manual/group__avr__pgmspace.html) library. The [AVR Libc 2.1.0 Manual](doc/avr-libc-user-manual-2.1.0.pdf) is absolutely crusial for understanding the capabilities of these microcontrollers. All code you find on GitHub or other resources directly or indirectly reference these. Having the [avr-gcc compiler flags](doc/avr-gcc compiler flags.html) is also necessary. 
@@ -174,7 +179,7 @@ Unless you get ``DEVICE`` and ``PARTNO`` right it will not compile and upload co
 
 	mv avr_haxx /Volumes/Sky/AVR/avr_haxx
 
-Now AVR tools resides locally:
+Now AVR toolchain resides on an external disk. The compiler suite will not be corrupted or change over time, even if we switch, update or reinstall the computer.
 
 	/Volumes/Sky/AVR/avr-toolchain/...
 	/Volumes/Sky/AVR/avr_haxx/..
