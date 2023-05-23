@@ -1,11 +1,11 @@
-# C Programming for 'Arduino Nano Every' Board (ATmega4809) with a Mac and VS Code
+# C Programming for 'Arduino Nano Every' Board (ATmega4809) on a Mac and VS Code
 	
-**``By Hans-Henrik Fuxelius, 2023-04-28``
+****``By Hans-Henrik Fuxelius, 2023-04-28``
 
-<img src="doc/pic/TheNano.png"  width="600">
+<img src="doc/pic/TheNano.png"  width="600">**
 
 ## Objectives
-This guide will take you through the setup of the AVR C-compiler for a Mac Silicon (or Intel) computer for developing with the ATmega4809 microcontroller. Development is done in _BASH_ and _Visual Studio Code_. The result is a complete environment for serious embedded programming.
+This guide will take you through the setup of the AVR C-compiler for a Mac Silicon (or Intel) computer for developing with the **ATmega4809** microcontroller. Development is done in _BASH_ and _Visual Studio Code_. The result is a complete environment for serious embedded programming.
 
 ## Introduction
 
@@ -25,7 +25,7 @@ Arduino is designed to make the microcontroller world more accessible to student
 <img src="doc/pic/arduino_ide.png"  width="600">
 
 ## Bare Metal Development
-If you develop in Windows it is easy to get started with [Microchip Studio](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio) which is free of cost and a very nice environment to work in. With that said. However. If you, like me, are used to work in an UNIX environment the locked-in Windows environment feels a bit narrow at times, especially if you are used to do development and programming on Ubuntu or MacOS. In industry Windows is standard but for many students and researchers at university Apple laptops and desktops are common.
+If you develop in Windows it is easy to get started with [Microchip Studio](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio) which is free of cost and a very nice environment to work in. Microchip also has the [MPLAB® X IDE](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide#) that works on Windows, Linux and Mac. With that said. However. If you, like me, are used to work in an UNIX environment the locked-in Windows environment feels a bit narrow at times, especially if you are used to do development and programming on Ubuntu or MacOS. In industry Windows is standard but for many students and researchers at university Apple laptops and desktops are common.
 
 
 For those of us who are used to develop with standard C (C99) in UNIX for Apple Silicon, Ubuntu or Fedora and want to get started there are fewer alternatives than in Windows that is standard for electronics and microcontroller development.
@@ -92,6 +92,9 @@ If it scrolls it means **everything is working** and its all a go!
 		
 Quit serial with ``CTRL+T Q``
 	
+### Roll it all your own
+For those so inclined, the entire avr-toolchain can be compiled from scratch by following these [instructions](https://github.com/arduino/toolchain-avr).
+
 ## C Development
 
 Now that the environment is up and functional, we should take a look at how C-development takes place.

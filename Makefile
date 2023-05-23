@@ -23,10 +23,10 @@ PARTNO      = m4809
 
 ######################################################################################
 # These paths are relocateble to serve multiple projects
-TOOLCHAIN_PATH  = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
-# TOOLCHAIN_PATH  = /Volumes/Sky/AVR/avr-toolchain/bin
-AVR_HAXX_PATH   = avr_haxx
-# AVR_HAXX_PATH   = /Volumes/Sky/AVR/avr_haxx
+# TOOLCHAIN_PATH  = ~/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin
+TOOLCHAIN_PATH  = ~/Library/AVR/avr-toolchain/bin
+# AVR_HAXX_PATH   = avr_haxx
+AVR_HAXX_PATH   = ~/Library/AVR/avr_haxx
 
 ######################################################################################
 AVR_GCC     = $(TOOLCHAIN_PATH)/avr-gcc
@@ -49,7 +49,7 @@ SIZE       = $(AVR_SIZE) --format=avr --mcu=$(DEVICE) $(TARGET).elf
 ######################################################################################
 AVRDUDE = $(AVR_DUDE) $(PROGRAMMER)
 
-COMPILE = $(AVR_GCC) -Wall -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -Og -std=gnu99 \
+COMPILE = $(AVR_GCC) -Wall -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -Og -std=gnu11 \
 		  -I"$(AVR_HAXX_PATH)/include" -B"$(AVR_HAXX_PATH)/devices/$(DEVICE)" \
 		  -ffunction-sections -MD -MP -fdata-sections -fpack-struct -fshort-enums -g2 
 
